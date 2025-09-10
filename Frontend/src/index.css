@@ -1,42 +1,173 @@
-root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
+/* Rwanda Smart Billing Design System - All colors, gradients, fonts, etc defined here. 
+All colors MUST be HSL. Inspired by Rwanda's colors and modern fintech design.
+*/
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+@layer base {
+  :root {
+    --background: 240 15% 98%;
+    --foreground: 218 27% 8%;
+
+    /* Rwanda-inspired color palette */
+    --rwanda-blue: 212 86% 52%;
+    --rwanda-green: 162 68% 40%;
+    --rwanda-yellow: 45 93% 65%;
+    
+    /* Primary brand colors (Rwanda Blue) */
+    --primary: 212 86% 52%;
+    --primary-foreground: 0 0% 100%;
+    --primary-light: 212 86% 65%;
+    --primary-dark: 212 86% 42%;
+
+    /* Secondary colors (Rwanda Green) */
+    --secondary: 162 68% 40%;
+    --secondary-foreground: 0 0% 100%;
+    --secondary-light: 162 68% 50%;
+
+    /* Accent colors (Rwanda Yellow) */
+    --accent: 45 93% 65%;
+    --accent-foreground: 218 27% 8%;
+    --accent-light: 45 93% 75%;
+
+    /* UI colors */
+    --card: 0 0% 100%;
+    --card-foreground: 218 27% 8%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 218 27% 8%;
+
+    --muted: 215 20% 96%;
+    --muted-foreground: 215 16% 47%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 162 68% 40%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 45 93% 65%;
+    --warning-foreground: 218 27% 8%;
+
+    --border: 214 31% 91%;
+    --input: 214 31% 91%;
+    --ring: 212 86% 52%;
+
+    --radius: 0.75rem;
+
+    /* Beautiful gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--rwanda-blue)), hsl(var(--primary-light)));
+    --gradient-secondary: linear-gradient(135deg, hsl(var(--rwanda-green)), hsl(var(--secondary-light)));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--rwanda-blue)), hsl(var(--rwanda-green)));
+    --gradient-card: linear-gradient(180deg, hsl(var(--card)), hsl(215 20% 98%));
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 hsl(var(--rwanda-blue) / 0.05);
+    --shadow: 0 4px 6px -1px hsl(var(--rwanda-blue) / 0.1), 0 2px 4px -2px hsl(var(--rwanda-blue) / 0.1);
+    --shadow-lg: 0 10px 15px -3px hsl(var(--rwanda-blue) / 0.1), 0 4px 6px -4px hsl(var(--rwanda-blue) / 0.1);
+    --shadow-glow: 0 0 20px hsl(var(--primary) / 0.15);
+
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-fast: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
   }
-  to {
-    transform: rotate(360deg);
+
+  .dark {
+    --background: 218 27% 8%;
+    --foreground: 240 15% 98%;
+
+    --card: 218 27% 12%;
+    --card-foreground: 240 15% 98%;
+
+    --popover: 218 27% 12%;
+    --popover-foreground: 240 15% 98%;
+
+    --primary: 212 86% 58%;
+    --primary-foreground: 218 27% 8%;
+
+    --secondary: 162 68% 45%;
+    --secondary-foreground: 218 27% 8%;
+
+    --muted: 218 27% 15%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 45 93% 70%;
+    --accent-foreground: 218 27% 8%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 240 15% 98%;
+
+    --border: 218 27% 20%;
+    --input: 218 27% 20%;
+    --ring: 212 86% 58%;
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-muted;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-muted-foreground/30 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-muted-foreground/50;
   }
 }
 
-.card {
-  padding: 2em;
-}
+@layer components {
+  /* Utility classes for gradients */
+  .gradient-primary {
+    background: var(--gradient-primary);
+  }
 
-.read-the-docs {
-  color: #888;
+  .gradient-secondary {
+    background: var(--gradient-secondary);
+  }
+
+  .gradient-hero {
+    background: var(--gradient-hero);
+  }
+
+  .gradient-card {
+    background: var(--gradient-card);
+  }
+
+  /* Glass effect */
+  .glass {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  /* Smooth transitions */
+  .transition-smooth {
+    transition: var(--transition-smooth);
+  }
+
+  .transition-fast {
+    transition: var(--transition-fast);
+  }
+
+  /* Custom shadows */
+  .shadow-glow {
+    box-shadow: var(--shadow-glow);
+  }
 }
