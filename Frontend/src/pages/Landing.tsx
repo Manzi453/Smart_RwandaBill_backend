@@ -1,20 +1,9 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
+import { ArrowRight, BarChart3, CheckCircle2, Clock, Droplets, Trash2, Users, Shield, Smartphone, Star } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { 
-  Smartphone, 
-  Shield, 
-  Clock, 
-  CheckCircle2, 
-  Droplets, 
-  Trash2, 
-  Users, 
-  BarChart3,
-  ArrowRight,
-  Star
-} from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export const Landing = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -87,7 +76,7 @@ export const Landing = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="py-20 px-4 bg-hero-pattern relative overflow-hidden">
+      <section className="min-h-screen flex items-center justify-center px-4 bg-hero-pattern relative overflow-hidden">
         <div className="absolute inset-0 bg-background/10"></div>
         <div className="container mx-auto relative z-10">
           <div className="text-center max-w-4xl mx-auto">
