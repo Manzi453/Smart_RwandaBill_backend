@@ -70,9 +70,11 @@ export const Landing = () => {
             </div>
             <div className="flex items-center space-x-3">
               <Button variant="ghost" asChild>
-                <Link to="/login">Sign In</Link>
+                <Link to="/login">Log In</Link>
               </Button>
-              <Button variant="gradient">Get Started</Button>
+              <Button variant="gradient" asChild>
+                <Link to="/SignUp">Get Started</Link>
+              </Button>
             </div>
           </div>
         </div>
@@ -115,9 +117,12 @@ export const Landing = () => {
                   variant="hero"
                   size="lg"
                   disabled={!phoneNumber}
+                  asChild
                 >
-                  Create Account
-                  <ArrowRight className="ml-2 h-4 w-4" />
+                  <Link to={`/signup?phone=${encodeURIComponent(phoneNumber)}`}>
+                    Create Account
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
                 </Button>
                 <p className="text-xs text-center text-muted-foreground">
                   Free to join • Secure • Trusted by 50,000+ families
@@ -233,7 +238,7 @@ export const Landing = () => {
               <Users className="mr-2 h-5 w-5" />
               For Citizens
             </Button>
-            <Button variant="outline" size="xl" className="min-w-[200px] border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary">
+            <Button variant="outline" size="xl" className="min-w-[200px]">
               <BarChart3 className="mr-2 h-5 w-5" />
               For Admins
             </Button>
