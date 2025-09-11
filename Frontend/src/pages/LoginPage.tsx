@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/Input";
-import { Card, CardContent } from "@/components/ui/Card";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent } from "@/components/ui/card";
 
 export default function LoginPage() {
   const [form, setForm] = useState({ email: "", password: "" });
@@ -43,14 +43,16 @@ export default function LoginPage() {
               />
               <Button 
                 type="submit" 
-                className="w-full bg-blue-600 text-white py-2 rounded-lg"
+                variant="gradient" // Using your gradient variant instead of custom classes
+                className="w-full" 
+                size="lg"
               >
                 Login
               </Button>
             </form>
 
             <p className="text-center text-gray-600 text-sm mt-4">
-              Don’t have an account?{" "}
+              Don't have an account?{" "}
               <a href="#" className="text-blue-600 font-medium">Register</a>
             </p>
           </CardContent>

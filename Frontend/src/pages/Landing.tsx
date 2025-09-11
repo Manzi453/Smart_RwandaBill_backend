@@ -4,6 +4,7 @@ import { ArrowRight, BarChart3, CheckCircle2, Clock, Droplets, Trash2, Users, Sh
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Link } from "react-router-dom";
 
 export const Landing = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -68,7 +69,9 @@ export const Landing = () => {
               </div>
             </div>
             <div className="flex items-center space-x-3">
-              <Button variant="ghost">Sign In</Button>
+              <Button variant="ghost" asChild>
+                <Link to="/login">Sign In</Link>
+              </Button>
               <Button variant="gradient">Get Started</Button>
             </div>
           </div>
@@ -87,7 +90,7 @@ export const Landing = () => {
             <p className="text-xl text-primary-foreground/90 mb-8 max-w-2xl mx-auto animate-fade-in">
               Join thousands of Rwandans using our platform to pay water, security, and sanitation bills with ease.
             </p>
-            
+
             {/* Quick Start Form */}
             <Card className="max-w-md mx-auto bg-card/90 backdrop-blur-sm border-0 shadow-2xl animate-slide-up">
               <CardHeader className="text-center pb-4">
@@ -107,9 +110,9 @@ export const Landing = () => {
                     className="mt-1"
                   />
                 </div>
-                <Button 
-                  className="w-full" 
-                  variant="hero" 
+                <Button
+                  className="w-full"
+                  variant="hero"
                   size="lg"
                   disabled={!phoneNumber}
                 >
@@ -136,7 +139,7 @@ export const Landing = () => {
               Manage water, security, and sanitation payments from one convenient platform
             </p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {services.map((service, index) => {
               const Icon = service.icon;
@@ -169,7 +172,7 @@ export const Landing = () => {
               Experience the future of community billing with our advanced features
             </p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {features.map((feature, index) => {
               const Icon = feature.icon;
