@@ -1,14 +1,33 @@
+// SignUpPage.tsx
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { FcGoogle } from "react-icons/fc";
+import { motion } from "framer-motion";
+
 
 // Mock data for districts and sectors
-const DISTRICTS = ["Kigali", "Gasabo", "Nyarugenge", "Kicukiro", "Rubavu", "Musanze", "Huye", "Nyagatare"];
+const DISTRICTS = [
+  "Kigali",
+  "Gasabo",
+  "Nyarugenge",
+  "Kicukiro",
+  "Rubavu",
+  "Musanze",
+  "Huye",
+  "Nyagatare",
+];
 const SECTORS = {
   Kigali: ["Nyarugenge", "Kacyiru", "Kimihurura", "Remera"],
   Gasabo: ["Gisozi", "Jali", "Kinyinya", "Ndera"],
@@ -21,8 +40,9 @@ const SECTORS = {
 };
 
 export default function SignUpPage() {
+  const { t } = useTranslation();
   const location = useLocation();
-  const navigate = useNavigate(); // ✅ initialize navigate
+  const navigate = useNavigate();
 
   const [form, setForm] = useState({
     telephone: "",
@@ -65,18 +85,26 @@ export default function SignUpPage() {
     // TODO: Implement Google OAuth integration
   };
 
-  const availableSectors = form.district ? SECTORS[form.district as keyof typeof SECTORS] || [] : [];
+  const availableSectors = form.district
+    ? SECTORS[form.district as keyof typeof SECTORS] || []
+    : [];
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-50 to-blue-200 px-4 py-8">
+    <motion.div
+      className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-50 to-blue-200 px-4 py-8 relative"
+      initial={{ opacity: 0, y: 40 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -40 }}
+      transition={{ duration: 0.4 }}
+    >
       <div className="w-full max-w-md">
         <Card className="shadow-lg rounded-2xl">
           <CardHeader className="text-center">
             <CardTitle className="text-3xl font-bold text-blue-600">
-              Create Account
+              {t("createAccount")}
             </CardTitle>
             <p className="text-sm text-gray-600 mt-2">
-              Join Rwanda Bills and manage your community bills digitally
+              {t("joinRwandaBills")}
             </p>
           </CardHeader>
           <CardContent className="p-6">
@@ -88,7 +116,7 @@ export default function SignUpPage() {
               onClick={handleGoogleSignUp}
             >
               <FcGoogle className="mr-2 h-5 w-5" />
-              Sign up with Google
+              {t("signUpWithGoogle")}
             </Button>
 
             <div className="relative mb-6">
@@ -96,19 +124,21 @@ export default function SignUpPage() {
                 <div className="w-full border-t border-gray-300" />
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">Or continue with</span>
+                <span className="px-2 bg-white text-gray-500">
+                  {t("orContinueWith")}
+                </span>
               </div>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">
               {/* Full Name */}
               <div className="space-y-2">
-                <Label htmlFor="fullName">Full Name</Label>
+                <Label htmlFor="fullName">{t("fullName")}</Label>
                 <Input
                   id="fullName"
                   name="fullName"
                   type="text"
-                  placeholder="Enter your full name"
+                  placeholder={t("enterFullName")}
                   value={form.fullName}
                   onChange={handleChange}
                   required
@@ -117,12 +147,12 @@ export default function SignUpPage() {
 
               {/* Telephone */}
               <div className="space-y-2">
-                <Label htmlFor="telephone">Phone Number</Label>
+                <Label htmlFor="telephone">{t("phoneNumber")}</Label>
                 <Input
                   id="telephone"
                   name="telephone"
                   type="tel"
-                  placeholder="07XXXXXXXX"
+                  placeholder={t("phonePlaceholder")}
                   value={form.telephone}
                   onChange={handleChange}
                   required
@@ -131,12 +161,12 @@ export default function SignUpPage() {
 
               {/* Email */}
               <div className="space-y-2">
-                <Label htmlFor="email">Email Address</Label>
+                <Label htmlFor="email">{t("email")}</Label>
                 <Input
                   id="email"
                   name="email"
                   type="email"
-                  placeholder="your.email@example.com"
+                  placeholder={t("emailPlaceholder")}
                   value={form.email}
                   onChange={handleChange}
                   required
@@ -145,12 +175,12 @@ export default function SignUpPage() {
 
               {/* Password */}
               <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password">{t("password")}</Label>
                 <Input
                   id="password"
                   name="password"
                   type="password"
-                  placeholder="Create a strong password"
+                  placeholder={t("createStrongPassword")}
                   value={form.password}
                   onChange={handleChange}
                   required
@@ -160,13 +190,15 @@ export default function SignUpPage() {
 
               {/* District */}
               <div className="space-y-2">
-                <Label htmlFor="district">District</Label>
+                <Label htmlFor="district">{t("district")}</Label>
                 <Select
                   value={form.district}
-                  onValueChange={(value) => handleSelectChange("district", value)}
+                  onValueChange={(value) =>
+                    handleSelectChange("district", value)
+                  }
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Select your district" />
+                    <SelectValue placeholder={t("selectDistrict")} />
                   </SelectTrigger>
                   <SelectContent>
                     {DISTRICTS.map((district) => (
@@ -181,13 +213,15 @@ export default function SignUpPage() {
               {/* Sector */}
               {form.district && (
                 <div className="space-y-2">
-                  <Label htmlFor="sector">Sector</Label>
+                  <Label htmlFor="sector">{t("sector")}</Label>
                   <Select
                     value={form.sector}
-                    onValueChange={(value) => handleSelectChange("sector", value)}
+                    onValueChange={(value) =>
+                      handleSelectChange("sector", value)
+                    }
                   >
                     <SelectTrigger>
-                      <SelectValue placeholder="Select your sector" />
+                      <SelectValue placeholder={t("selectSector")} />
                     </SelectTrigger>
                     <SelectContent>
                       {availableSectors.map((sector) => (
@@ -208,7 +242,7 @@ export default function SignUpPage() {
                   size="lg"
                   disabled={!form.district || !form.sector}
                 >
-                  Create Account
+                  {t("createAccount")}
                 </Button>
                 <Button
                   type="button"
@@ -217,24 +251,27 @@ export default function SignUpPage() {
                   className="flex-1"
                   size="lg"
                 >
-                  Go Back
+                  {t("Go Back")}
                 </Button>
               </div>
             </form>
 
             <p className="text-center text-gray-600 text-sm mt-6">
-              Already have an account?{" "}
-              <a href="/login" className="text-blue-600 font-medium hover:underline">
-                Sign in
+              {t("alreadyHaveAccount")}{" "}
+              <a
+                href="/login"
+                className="text-blue-600 font-medium hover:underline"
+              >
+                {t("signIn")}
               </a>
             </p>
 
             <p className="text-xs text-center text-gray-500 mt-4">
-              By creating an account, you agree to our Terms of Service and Privacy Policy
+              {t("agreeToTerms")}
             </p>
           </CardContent>
         </Card>
       </div>
-    </div>
+    </motion.div>
   );
 }
