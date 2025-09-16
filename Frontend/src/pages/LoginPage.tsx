@@ -41,14 +41,21 @@ export default function LoginPage() {
                 onChange={handleChange}
                 required
               />
-              <Button 
-                type="submit" 
-                variant="gradient" // Using your gradient variant instead of custom classes
-                className="w-full" 
-                size="lg"
-              >
-                Login
-              </Button>
+              {/* Buttons side by side */}
+                            <div className="flex gap-2">
+                              <Button type="submit" className="flex-1" size="lg">
+                                Login
+                              </Button>
+                              <Button
+                                type="button"
+                                onClick={() => navigate("/")}
+                                variant="outline"
+                                className="flex-1"
+                                size="lg"
+                              >
+                                Go Back
+                              </Button>
+                            </div>
             </form>
 
             <p className="text-center text-gray-600 text-sm mt-4">

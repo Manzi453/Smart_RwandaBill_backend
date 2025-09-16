@@ -240,7 +240,7 @@ export const Landing = () => {
             </Button>
             <Button variant="outline" size="xl" className="min-w-[200px]">
               <BarChart3 className="mr-2 h-5 w-5" />
-              For Admins
+               <Link to="/login">For Admins</Link>
             </Button>
           </div>
         </div>
@@ -256,7 +256,7 @@ export const Landing = () => {
               </div>
               <div>
                 <div className="font-semibold">Rwanda Bills</div>
-                <div className="text-sm text-muted-foreground">© 2024 All rights reserved</div>
+                <div className="text-sm text-muted-foreground">© 2025 All rights reserved</div>
               </div>
             </div>
             <div className="text-sm text-muted-foreground">

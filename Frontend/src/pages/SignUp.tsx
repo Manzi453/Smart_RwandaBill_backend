@@ -199,15 +199,26 @@ export default function SignUpPage() {
                 </div>
               )}
 
-              <Button 
-                type="submit" 
-                variant="gradient"
-                className="w-full" 
-                size="lg"
-                disabled={!form.district || !form.sector}
-              >
-                Create Account
-              </Button>
+            {/* Buttons side by side */}
+                          <div className="flex gap-2">
+                            <Button
+                              type="submit"
+                              className="flex-1 bg-blue-600 hover:bg-blue-700"
+                              size="lg"
+                              disabled={!form.district || !form.sector}
+                            >
+                              Create Account
+                            </Button>
+                            <Button
+                              type="button"
+                              onClick={() => navigate("/")}
+                              variant="outline"
+                              className="flex-1"
+                              size="lg"
+                            >
+                              Go Back
+                            </Button>
+                          </div>
             </form>
 
             <p className="text-center text-gray-600 text-sm mt-6">
