@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -17,26 +17,28 @@ const SECTORS = {
   Rubavu: ["Gisenyi", "Rubavu", "Nyamyumba"],
   Musanze: ["Muhoza", "Nyange", "Shingiro"],
   Huye: ["Ngoma", "Tumba", "Mukura"],
-  Nyagatare: ["Nyagatare", "Rwimiyaga", "Tabagwe"]
+  Nyagatare: ["Nyagatare", "Rwimiyaga", "Tabagwe"],
 };
 
 export default function SignUpPage() {
   const location = useLocation();
+  const navigate = useNavigate(); // ✅ initialize navigate
+
   const [form, setForm] = useState({
     telephone: "",
     password: "",
     fullName: "",
     email: "",
     district: "",
-    sector: ""
+    sector: "",
   });
 
   // Read phone number from URL query parameter
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
-    const phone = searchParams.get('phone');
+    const phone = searchParams.get("phone");
     if (phone) {
-      setForm(prev => ({ ...prev, telephone: decodeURIComponent(phone) }));
+      setForm((prev) => ({ ...prev, telephone: decodeURIComponent(phone) }));
     }
   }, [location.search]);
 
@@ -45,11 +47,10 @@ export default function SignUpPage() {
   };
 
   const handleSelectChange = (name: string, value: string) => {
-    setForm({ 
-      ...form, 
+    setForm({
+      ...form,
       [name]: value,
-      // Reset sector when district changes
-      ...(name === "district" && { sector: "" })
+      ...(name === "district" && { sector: "" }), // reset sector if district changes
     });
   };
 
@@ -114,7 +115,7 @@ export default function SignUpPage() {
                 />
               </div>
 
-              {/* Telephone (pre-filled from landing page) */}
+              {/* Telephone */}
               <div className="space-y-2">
                 <Label htmlFor="telephone">Phone Number</Label>
                 <Input
@@ -157,7 +158,7 @@ export default function SignUpPage() {
                 />
               </div>
 
-              {/* District Selection */}
+              {/* District */}
               <div className="space-y-2">
                 <Label htmlFor="district">District</Label>
                 <Select
@@ -177,7 +178,7 @@ export default function SignUpPage() {
                 </Select>
               </div>
 
-              {/* Sector Selection (only shown when district is selected) */}
+              {/* Sector */}
               {form.district && (
                 <div className="space-y-2">
                   <Label htmlFor="sector">Sector</Label>
@@ -199,26 +200,26 @@ export default function SignUpPage() {
                 </div>
               )}
 
-            {/* Buttons side by side */}
-                          <div className="flex gap-2">
-                            <Button
-                              type="submit"
-                              className="flex-1 bg-blue-600 hover:bg-blue-700"
-                              size="lg"
-                              disabled={!form.district || !form.sector}
-                            >
-                              Create Account
-                            </Button>
-                            <Button
-                              type="button"
-                              onClick={() => navigate("/")}
-                              variant="outline"
-                              className="flex-1"
-                              size="lg"
-                            >
-                              Go Back
-                            </Button>
-                          </div>
+              {/* Buttons side by side */}
+              <div className="flex gap-2">
+                <Button
+                  type="submit"
+                  className="flex-1 bg-blue-600 hover:bg-blue-700"
+                  size="lg"
+                  disabled={!form.district || !form.sector}
+                >
+                  Create Account
+                </Button>
+                <Button
+                  type="button"
+                  onClick={() => navigate("/")}
+                  variant="outline"
+                  className="flex-1"
+                  size="lg"
+                >
+                  Go Back
+                </Button>
+              </div>
             </form>
 
             <p className="text-center text-gray-600 text-sm mt-6">
