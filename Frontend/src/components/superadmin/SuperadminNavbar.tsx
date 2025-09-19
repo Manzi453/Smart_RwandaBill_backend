@@ -139,3 +139,64 @@ const SuperadminNavbar = ({
                 </div>
                 <div className="min-w-0 flex-1">
                   <h1 className="text-sm font-semibold text-foreground truncate">
+                    Super Admin
+                  </h1>
+                  <p className="text-xs text-muted-foreground">Super Admin</p>
+                </div>
+              </div>
+              <button
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="p-1 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            {/* Mobile Navigation */}
+            <nav className="px-2 py-4 space-y-1">
+              {navItems.map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => {
+                    onSectionChange(item.id);
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className={`w-full flex items-center px-3 py-2 rounded-md text-base font-medium transition-colors ${
+                    activeSection === item.id
+                      ? "bg-primary text-primary-foreground"
+                      : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                  }`}
+                >
+                  <item.icon className="h-5 w-5 mr-3" />
+                  <span>{item.label}</span>
+                </button>
+              ))}
+              <button
+                onClick={() => {
+                  // Placeholder logout logic
+                  setIsMobileMenuOpen(false);
+                }}
+                className="w-full flex items-center px-3 py-2 rounded-md text-base font-medium text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+              >
+                <Settings className="h-5 w-5 mr-3" />
+                Logout
+              </button>
+            </nav>
+          </div>
+        </div>
+      )}
+
+      {/* Mobile Menu Button */}
+      <div className="md:hidden fixed top-4 left-4 z-40">
+        <button
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className="p-2 bg-card border border-border rounded-md shadow-sm text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+        >
+          <Menu className="h-5 w-5" />
+        </button>
+      </div>
+    </>
+  );
+};
+
+export default SuperadminNavbar;
