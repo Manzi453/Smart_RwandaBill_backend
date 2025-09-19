@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -26,6 +27,8 @@ import {
 } from "lucide-react";
 
 const SuperadminSettings = () => {
+  const { t } = useTranslation();
+
   // System Configuration
   const [systemEmail, setSystemEmail] = useState("admin@security-water.com");
   const [systemName, setSystemName] = useState(
@@ -177,26 +180,26 @@ const SuperadminSettings = () => {
           <CardContent className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="systemName">System Name</Label>
+                <Label htmlFor="systemName">{t("systemName")}</Label>
                 <Input
                   id="systemName"
                   value={systemName}
                   onChange={(e) => setSystemName(e.target.value)}
-                  placeholder="Enter system name"
+                  placeholder={t("enterSystemName")}
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="systemEmail">System Email</Label>
+                <Label htmlFor="systemEmail">{t("systemEmail")}</Label>
                 <Input
                   id="systemEmail"
                   type="email"
                   value={systemEmail}
                   onChange={(e) => setSystemEmail(e.target.value)}
-                  placeholder="admin@example.com"
+                  placeholder={t("adminEmailPlaceholder")}
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="defaultLanguage">Default Language</Label>
+                <Label htmlFor="defaultLanguage">{t("defaultLanguage")}</Label>
                 <Select
                   value={defaultLanguage}
                   onValueChange={setDefaultLanguage}
@@ -205,25 +208,25 @@ const SuperadminSettings = () => {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="en">English</SelectItem>
-                    <SelectItem value="fr">French</SelectItem>
-                    <SelectItem value="rw">Kinyarwanda</SelectItem>
+                    <SelectItem value="en">{t("english")}</SelectItem>
+                    <SelectItem value="fr">{t("french")}</SelectItem>
+                    <SelectItem value="rw">{t("kinyarwanda")}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="timezone">Timezone</Label>
+                <Label htmlFor="timezone">{t("timezone")}</Label>
                 <Select value={timezone} onValueChange={setTimezone}>
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="Africa/Kigali">
-                      East Africa Time (UTC+3)
+                      {t("eastAfricaTime")}
                     </SelectItem>
-                    <SelectItem value="UTC">UTC</SelectItem>
+                    <SelectItem value="UTC">{t("utc")}</SelectItem>
                     <SelectItem value="Africa/Nairobi">
-                      East Africa Time (UTC+3)
+                      {t("eastAfricaTime")}
                     </SelectItem>
                   </SelectContent>
                 </Select>

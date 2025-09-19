@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line, AreaChart, Area } from "recharts";
 import { Users, Settings, Shield, TrendingUp, Loader2, Activity } from "lucide-react";
 import { getSuperAdminStats, getSuperAdminBillsChart, getSuperAdminUsersChart, getSuperAdminAdminsChart, getSuperAdminSystemHealth } from "@/lib/api";
@@ -35,6 +36,8 @@ const AnimatedPage = ({ children }) => (
 
 // Super Admin Dashboard
 const SuperAdminDashboard = () => {
+  const { t } = useTranslation();
+
   const { data: stats, isLoading: statsLoading, error: statsError } = useQuery({
     queryKey: ['superAdminStats'],
     queryFn: getSuperAdminStats,
@@ -64,32 +67,32 @@ const SuperAdminDashboard = () => {
 
   const statCards = [
     {
-      label: "Total Users",
-      value: stats ? stats.totalUsers.toLocaleString() : "Loading...",
+      label: t("totalUsers"),
+      value: stats ? stats.totalUsers.toLocaleString() : t("loading"),
       change: "+8%",
       icon: Users,
-      tooltip: "Total number of registered users in the system"
+      tooltip: t("totalUsersTooltip")
     },
     {
-      label: "Total Bills",
-      value: stats ? stats.totalBills.toLocaleString() : "Loading...",
+      label: t("totalBills"),
+      value: stats ? stats.totalBills.toLocaleString() : t("loading"),
       change: "+15%",
       icon: TrendingUp,
-      tooltip: "Total number of bills paid"
+      tooltip: t("totalBillsTooltip")
     },
     {
-      label: "Total Admins",
-      value: stats ? stats.totalAdmins.toString() : "Loading...",
+      label: t("totalAdmins"),
+      value: stats ? stats.totalAdmins.toString() : t("loading"),
       change: "+12%",
       icon: Shield,
-      tooltip: "Total number of active admins"
+      tooltip: t("totalAdminsTooltip")
     },
     {
-      label: "System Health",
-      value: stats ? `${stats.systemHealth}%` : "Loading...",
+      label: t("systemHealth"),
+      value: stats ? `${stats.systemHealth}%` : t("loading"),
       change: "+2.1%",
       icon: Activity,
-      tooltip: "Overall system health score based on uptime and performance"
+      tooltip: t("systemHealthTooltip")
     }
   ];
 
@@ -120,7 +123,7 @@ const SuperAdminDashboard = () => {
     return (
       <div className="p-6">
         <div className="text-center text-red-600">
-          Error loading super admin data: {statsError.message}
+          {t("errorLoadingSuperAdminData")}: {statsError.message}
         </div>
       </div>
     );
@@ -129,7 +132,7 @@ const SuperAdminDashboard = () => {
   return (
     <AnimatedPage>
       <div className="p-6 space-y-6">
-        <h1 className="text-3xl font-bold text-foreground">System Overview</h1>
+        <h1 className="text-3xl font-bold text-foreground">{t("systemOverview")}</h1>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {statCards.map((stat, index) => (
