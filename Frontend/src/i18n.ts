@@ -1,4 +1,4 @@
-// src/i18n.ts
+ // src/i18n.ts
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 
@@ -75,6 +75,11 @@ const resources = {
       userManagementDesc: "Oversee all user accounts and permissions",
       systemReports: "System Reports",
       systemReportsDesc: "View detailed system analytics and reports",
+      systemSettings: "System Settings",
+      systemSettingsDesc: "Configure global system preferences",
+      userDashboard: "User Dashboard",
+      admins: "Admins",
+      systemUptime: "System Uptime",
       systemSettings: "System Settings",
       systemSettingsDesc: "Configure global system preferences",
       userDashboard: "User Dashboard",
