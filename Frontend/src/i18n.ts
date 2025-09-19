@@ -10,7 +10,7 @@ const resources = {
       GoBack: "Go Back",
       createAccount: "Create Account",
       signUp: "Sign Up",
-      signIn: "Sign In",
+      signIn: "Log in",
       fullName: "Full Name",
       phoneNumber: "Phone Number",
       email: "Email Address",
