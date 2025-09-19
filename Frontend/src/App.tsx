@@ -1,5 +1,7 @@
-// App.tsx
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { lazy, Suspense } from "react";
+import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import { Landing } from "./pages/Landing";
 import LoginPage from "./pages/LoginPage";
 import { Admin } from "./pages/Admin";
@@ -8,6 +10,22 @@ import { Dashboard } from "./pages/Dashboard";
 import SuperAdmin from "./pages/SuperAdmin";
 import { AnimatePresence, motion } from "framer-motion";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+
+const queryClient = new QueryClient();
+
+const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
+  const { isAuthenticated, isLoading } = useAuth();
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return children;
+};
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -83,14 +101,16 @@ function AnimatedRoutes() {
         <Route
           path="/superadmin"
           element={
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              <SuperAdmin />
-            </motion.div>
+            <ProtectedRoute>
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.9, opacity: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                <SuperAdmin />
+              </motion.div>
+            </ProtectedRoute>
           }
         />
       </Routes>
@@ -100,11 +120,15 @@ function AnimatedRoutes() {
 
 export default function App() {
   return (
-    <Router>
-      <div className="fixed top-4 right-4 z-50">
-        <LanguageSwitcher />
-      </div>
-      <AnimatedRoutes />
-    </Router>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <Router>
+          <div className="fixed top-4 right-4 z-50">
+            <LanguageSwitcher />
+          </div>
+          <AnimatedRoutes />
+        </Router>
+      </AuthProvider>
+    </QueryClientProvider>
   );
 }
