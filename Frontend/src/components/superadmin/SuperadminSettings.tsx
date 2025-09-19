@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -111,11 +112,13 @@ const SuperadminSettings = () => {
       await new Promise((resolve) => setTimeout(resolve, 1500));
 
       // Show success message (placeholder for toast notification)
-      console.log("Settings updated successfully");
-      alert("Settings updated successfully!");
+      // console.log("Settings updated successfully");
+      // alert("Settings updated successfully!");
+      toast.success(t("settingsUpdatedSuccessfully") || "Settings updated successfully");
     } catch (error) {
-      console.error("Failed to update settings:", error);
-      alert("Failed to update settings. Please try again.");
+      // console.error("Failed to update settings:", error);
+      // alert("Failed to update settings. Please try again.");
+      toast.error(t("failedToUpdateSettings") || "Failed to update settings. Please try again.");
     } finally {
       setIsSaving(false);
     }
