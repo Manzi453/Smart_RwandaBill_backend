@@ -2,7 +2,13 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
@@ -16,13 +22,15 @@ import {
   Clock,
   Globe,
   Database,
-  AlertTriangle
+  AlertTriangle,
 } from "lucide-react";
 
 const SuperadminSettings = () => {
   // System Configuration
   const [systemEmail, setSystemEmail] = useState("admin@security-water.com");
-  const [systemName, setSystemName] = useState("Security and Water Payment System");
+  const [systemName, setSystemName] = useState(
+    "Security and Water Payment System"
+  );
   const [defaultLanguage, setDefaultLanguage] = useState("en");
   const [timezone, setTimezone] = useState("Africa/Kigali");
 
@@ -52,7 +60,8 @@ const SuperadminSettings = () => {
 
   // User Management
   const [autoApproveUsers, setAutoApproveUsers] = useState(false);
-  const [requireEmailVerification, setRequireEmailVerification] = useState(true);
+  const [requireEmailVerification, setRequireEmailVerification] =
+    useState(true);
   const [allowGuestAccess, setAllowGuestAccess] = useState(false);
 
   // System Maintenance
@@ -96,7 +105,7 @@ const SuperadminSettings = () => {
       // });
 
       // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      await new Promise((resolve) => setTimeout(resolve, 1500));
 
       // Show success message (placeholder for toast notification)
       console.log("Settings updated successfully");
@@ -144,7 +153,9 @@ const SuperadminSettings = () => {
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-3">
           <Settings className="w-8 h-8 text-primary" />
-          <h2 className="text-3xl font-bold text-foreground">System Settings</h2>
+          <h2 className="text-3xl font-bold text-foreground">
+            System Settings
+          </h2>
         </div>
       </div>
 
@@ -155,7 +166,6 @@ const SuperadminSettings = () => {
         }}
         className="space-y-6"
       >
-
         {/* System Configuration */}
         <Card>
           <CardHeader>
@@ -187,7 +197,10 @@ const SuperadminSettings = () => {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="defaultLanguage">Default Language</Label>
-                <Select value={defaultLanguage} onValueChange={setDefaultLanguage}>
+                <Select
+                  value={defaultLanguage}
+                  onValueChange={setDefaultLanguage}
+                >
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
@@ -205,9 +218,13 @@ const SuperadminSettings = () => {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="Africa/Kigali">East Africa Time (UTC+3)</SelectItem>
+                    <SelectItem value="Africa/Kigali">
+                      East Africa Time (UTC+3)
+                    </SelectItem>
                     <SelectItem value="UTC">UTC</SelectItem>
-                    <SelectItem value="Africa/Nairobi">East Africa Time (UTC+3)</SelectItem>
+                    <SelectItem value="Africa/Nairobi">
+                      East Africa Time (UTC+3)
+                    </SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -226,7 +243,9 @@ const SuperadminSettings = () => {
           <CardContent className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="minMembersPerGroup">Minimum Members per Group</Label>
+                <Label htmlFor="minMembersPerGroup">
+                  Minimum Members per Group
+                </Label>
                 <Input
                   id="minMembersPerGroup"
                   type="number"
@@ -236,7 +255,9 @@ const SuperadminSettings = () => {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="maxMembersPerGroup">Maximum Members per Group</Label>
+                <Label htmlFor="maxMembersPerGroup">
+                  Maximum Members per Group
+                </Label>
                 <Input
                   id="maxMembersPerGroup"
                   type="number"
@@ -250,7 +271,9 @@ const SuperadminSettings = () => {
               <div className="flex items-center justify-between">
                 <div className="space-y-1">
                   <Label>Auto-approve New Groups</Label>
-                  <p className="text-sm text-muted-foreground">Automatically approve group creation requests</p>
+                  <p className="text-sm text-muted-foreground">
+                    Automatically approve group creation requests
+                  </p>
                 </div>
                 <Switch
                   checked={autoApproveGroups}
@@ -260,7 +283,9 @@ const SuperadminSettings = () => {
               <div className="flex items-center justify-between">
                 <div className="space-y-1">
                   <Label>Require Group Approval</Label>
-                  <p className="text-sm text-muted-foreground">Require admin approval for new groups</p>
+                  <p className="text-sm text-muted-foreground">
+                    Require admin approval for new groups
+                  </p>
                 </div>
                 <Switch
                   checked={requireGroupApproval}
@@ -283,7 +308,10 @@ const SuperadminSettings = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="defaultCurrency">Default Currency</Label>
-                <Select value={defaultCurrency} onValueChange={setDefaultCurrency}>
+                <Select
+                  value={defaultCurrency}
+                  onValueChange={setDefaultCurrency}
+                >
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
@@ -295,8 +323,13 @@ const SuperadminSettings = () => {
                 </Select>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="contributionFrequency">Contribution Frequency</Label>
-                <Select value={contributionFrequency} onValueChange={setContributionFrequency}>
+                <Label htmlFor="contributionFrequency">
+                  Contribution Frequency
+                </Label>
+                <Select
+                  value={contributionFrequency}
+                  onValueChange={setContributionFrequency}
+                >
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
@@ -308,7 +341,9 @@ const SuperadminSettings = () => {
                 </Select>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="minContribution">Minimum Contribution ({defaultCurrency})</Label>
+                <Label htmlFor="minContribution">
+                  Minimum Contribution ({defaultCurrency})
+                </Label>
                 <Input
                   id="minContribution"
                   type="number"
@@ -318,7 +353,9 @@ const SuperadminSettings = () => {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="maxContribution">Maximum Contribution ({defaultCurrency})</Label>
+                <Label htmlFor="maxContribution">
+                  Maximum Contribution ({defaultCurrency})
+                </Label>
                 <Input
                   id="maxContribution"
                   type="number"
@@ -344,7 +381,9 @@ const SuperadminSettings = () => {
               <div className="flex items-center justify-between">
                 <div className="space-y-1">
                   <Label>Email Notifications</Label>
-                  <p className="text-sm text-muted-foreground">Send notifications via email</p>
+                  <p className="text-sm text-muted-foreground">
+                    Send notifications via email
+                  </p>
                 </div>
                 <Switch
                   checked={emailNotifications}
@@ -354,7 +393,9 @@ const SuperadminSettings = () => {
               <div className="flex items-center justify-between">
                 <div className="space-y-1">
                   <Label>SMS Notifications</Label>
-                  <p className="text-sm text-muted-foreground">Send notifications via SMS</p>
+                  <p className="text-sm text-muted-foreground">
+                    Send notifications via SMS
+                  </p>
                 </div>
                 <Switch
                   checked={smsNotifications}
@@ -364,7 +405,9 @@ const SuperadminSettings = () => {
               <div className="flex items-center justify-between">
                 <div className="space-y-1">
                   <Label>Push Notifications</Label>
-                  <p className="text-sm text-muted-foreground">Send push notifications to mobile devices</p>
+                  <p className="text-sm text-muted-foreground">
+                    Send push notifications to mobile devices
+                  </p>
                 </div>
                 <Switch
                   checked={pushNotifications}
@@ -373,8 +416,13 @@ const SuperadminSettings = () => {
               </div>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="notificationFrequency">Notification Frequency</Label>
-              <Select value={notificationFrequency} onValueChange={setNotificationFrequency}>
+              <Label htmlFor="notificationFrequency">
+                Notification Frequency
+              </Label>
+              <Select
+                value={notificationFrequency}
+                onValueChange={setNotificationFrequency}
+              >
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
@@ -399,7 +447,9 @@ const SuperadminSettings = () => {
           <CardContent className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="sessionTimeout">Session Timeout (minutes)</Label>
+                <Label htmlFor="sessionTimeout">
+                  Session Timeout (minutes)
+                </Label>
                 <Input
                   id="sessionTimeout"
                   type="number"
@@ -433,7 +483,9 @@ const SuperadminSettings = () => {
               <div className="flex items-center justify-between">
                 <div className="space-y-1">
                   <Label>Two-Factor Authentication</Label>
-                  <p className="text-sm text-muted-foreground">Require 2FA for all admin accounts</p>
+                  <p className="text-sm text-muted-foreground">
+                    Require 2FA for all admin accounts
+                  </p>
                 </div>
                 <Switch
                   checked={twoFactorAuth}
@@ -457,7 +509,9 @@ const SuperadminSettings = () => {
               <div className="flex items-center justify-between">
                 <div className="space-y-1">
                   <Label>Auto-approve New Users</Label>
-                  <p className="text-sm text-muted-foreground">Automatically approve user registration requests</p>
+                  <p className="text-sm text-muted-foreground">
+                    Automatically approve user registration requests
+                  </p>
                 </div>
                 <Switch
                   checked={autoApproveUsers}
@@ -467,7 +521,9 @@ const SuperadminSettings = () => {
               <div className="flex items-center justify-between">
                 <div className="space-y-1">
                   <Label>Require Email Verification</Label>
-                  <p className="text-sm text-muted-foreground">Require email verification for new accounts</p>
+                  <p className="text-sm text-muted-foreground">
+                    Require email verification for new accounts
+                  </p>
                 </div>
                 <Switch
                   checked={requireEmailVerification}
@@ -477,7 +533,9 @@ const SuperadminSettings = () => {
               <div className="flex items-center justify-between">
                 <div className="space-y-1">
                   <Label>Allow Guest Access</Label>
-                  <p className="text-sm text-muted-foreground">Allow unauthenticated users to view public content</p>
+                  <p className="text-sm text-muted-foreground">
+                    Allow unauthenticated users to view public content
+                  </p>
                 </div>
                 <Switch
                   checked={allowGuestAccess}
@@ -500,7 +558,10 @@ const SuperadminSettings = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="backupFrequency">Backup Frequency</Label>
-                <Select value={backupFrequency} onValueChange={setBackupFrequency}>
+                <Select
+                  value={backupFrequency}
+                  onValueChange={setBackupFrequency}
+                >
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
@@ -529,7 +590,9 @@ const SuperadminSettings = () => {
                     <AlertTriangle className="w-4 h-4 mr-2 text-orange-500" />
                     Maintenance Mode
                   </Label>
-                  <p className="text-sm text-muted-foreground">Put the system in maintenance mode (users cannot access)</p>
+                  <p className="text-sm text-muted-foreground">
+                    Put the system in maintenance mode (users cannot access)
+                  </p>
                 </div>
                 <Switch
                   checked={maintenanceMode}
@@ -544,11 +607,7 @@ const SuperadminSettings = () => {
 
         {/* Action Buttons */}
         <div className="flex justify-end space-x-4">
-          <Button
-            type="button"
-            variant="outline"
-            onClick={handleReset}
-          >
+          <Button type="button" variant="outline" onClick={handleReset}>
             Reset to Defaults
           </Button>
           <Button type="submit" disabled={isSaving}>
