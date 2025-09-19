@@ -80,9 +80,6 @@ const resources = {
       userDashboard: "User Dashboard",
       admins: "Admins",
       systemUptime: "System Uptime",
-      systemSettings: "System Settings",
-      systemSettingsDesc: "Configure global system preferences",
-      userDashboard: "User Dashboard",
     },
   },
   fr: {
