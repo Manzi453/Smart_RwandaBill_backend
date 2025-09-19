@@ -78,6 +78,7 @@ const resources = {
       systemSettings: "System Settings",
       systemSettingsDesc: "Configure global system preferences",
       userDashboard: "User Dashboard",
+      dashboardDesc: "Welcome to your personal dashboard. Manage your bills and account here.",
       admins: "Admins",
       systemUptime: "System Uptime",
     },
