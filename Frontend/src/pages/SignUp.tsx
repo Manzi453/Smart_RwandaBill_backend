@@ -1,7 +1,7 @@
 // SignUpPage.tsx
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -251,20 +251,20 @@ export default function SignUpPage() {
                   className="flex-1"
                   size="lg"
                 >
-                  {t("Go Back")}
+                  {t("GoBack")}
                 </Button>
               </div>
             </form>
 
-            <p className="text-center text-gray-600 text-sm mt-6">
-              {t("alreadyHaveAccount")}{" "}
-              <a
-                href="/login"
-                className="text-blue-600 font-medium hover:underline"
-              >
-                {t("signIn")}
-              </a>
-            </p>
+              <p className="text-center text-gray-600 text-sm mt-6">
+                {t("alreadyHaveAccount")}{" "}
+                <Link
+                  to="/login"
+                  className="text-blue-600 font-medium hover:underline"
+                >
+                  {t("signIn")}
+                </Link>
+              </p>
 
             <p className="text-xs text-center text-gray-500 mt-4">
               {t("agreeToTerms")}

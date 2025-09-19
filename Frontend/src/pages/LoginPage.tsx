@@ -1,7 +1,7 @@
 // LoginPage.tsx
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
@@ -9,7 +9,7 @@ import { motion } from "framer-motion";
 
 export default function LoginPage() {
   const [form, setForm] = useState({ email: "", password: "" });
-  const navigater = useNavigate();
+  const navigate = useNavigate();
   const location = useLocation();
   const { t } = useTranslation();
 
@@ -62,21 +62,21 @@ export default function LoginPage() {
                 </Button>
                 <Button
                   type="button"
-                  onClick={() => navigater("/")}
+                  onClick={() => navigate("/")}
                   variant="outline"
                   className="flex-1"
                   size="lg"
                 >
-                  {t("Go Back")}
+                  {t("GoBack")}
                 </Button>
               </div>
             </form>
 
             <p className="text-center text-gray-600 text-sm mt-4">
               {t("dontHaveAccount")}{" "}
-              <a href="/signup" className="text-blue-600 font-medium hover:underline">
+              <Link to="/signup" className="text-blue-600 font-medium hover:underline">
                 {t("signUp")}
-              </a>
+              </Link>
             </p>
           </CardContent>
         </Card>

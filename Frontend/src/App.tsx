@@ -4,6 +4,8 @@ import { Landing } from "./pages/Landing";
 import LoginPage from "./pages/LoginPage";
 import { Admin } from "./pages/Admin";
 import SignUpPage from "./pages/SignUp";
+import { Dashboard } from "./pages/Dashboard";
+import SuperAdmin from "./pages/SuperAdmin";
 import { AnimatePresence, motion } from "framer-motion";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 
@@ -62,6 +64,32 @@ function AnimatedRoutes() {
               transition={{ duration: 0.5 }}
             >
               <Admin />
+            </motion.div>
+          }
+        />
+        <Route
+          path="/dashboard"
+          element={
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -50 }}
+              transition={{ duration: 0.5 }}
+            >
+              <Dashboard />
+            </motion.div>
+          }
+        />
+        <Route
+          path="/superadmin"
+          element={
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <SuperAdmin />
             </motion.div>
           }
         />

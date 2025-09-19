@@ -94,7 +94,7 @@ export const Landing = () => {
               <Link to="/login">{t("login")}</Link>
             </Button>
             <Button variant="gradient" asChild>
-              <Link to="/SignUp">{t("signUp")}</Link>
+              <Link to="/signup">{t("signUp")}</Link>
             </Button>
             <div className="ml-4">
               <LanguageSwitcher />
@@ -269,13 +269,17 @@ export const Landing = () => {
             {t("joinThousands")}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="secondary" size="xl" className="min-w-[200px]">
-              <Users className="mr-2 h-5 w-5" />
-              {t("forCitizens")}
+            <Button variant="secondary" size="xl" className="min-w-[200px]" asChild>
+              <Link to="/signup">
+                <Users className="mr-2 h-5 w-5" />
+                {t("forCitizens")}
+              </Link>
             </Button>
-            <Button variant="outline" size="xl" className="min-w-[200px]">
-              <BarChart3 className="mr-2 h-5 w-5" />
-              <Link to="/login">{t("forAdmins")}</Link>
+            <Button variant="outline" size="xl" className="min-w-[200px]" asChild>
+              <Link to="/login">
+                <BarChart3 className="mr-2 h-5 w-5" />
+                {t("forAdmins")}
+              </Link>
             </Button>
           </div>
         </div>
@@ -290,7 +294,7 @@ export const Landing = () => {
                 <span className="text-white font-bold text-sm">RB</span>
               </div>
               <div>
-                <div className="font-semibold">Rwanda Bills</div>
+                <div className="font-semibold">{t("rwandaBills")}</div>
                 <div className="text-sm text-muted-foreground">
                   {t("allRightsReserved")}
                 </div>
