@@ -590,7 +590,7 @@ const Admin = () => {
       <div className={`transition-all duration-300 ${
         sidebarCollapsed ? 'md:pl-20' : 'md:pl-64'
       }`}>
-        <div className="min-h-screen">
+        <div className="min-h-screen pt-16">
           <AnimatePresence mode="wait">
             <AnimatedPage key={activeSection}>
               {renderSection()}
