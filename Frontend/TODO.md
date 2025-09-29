@@ -3,7 +3,7 @@
 ## Tasks to Complete
 
 - [x] Add new mock API functions to `src/lib/api.ts` for admin-specific data (stats, charts, user list, payment list, recent activities).
-- [ ] Create `src/components/admin/AdminNavbar.tsx` component for navigation sidebar (dashboard, users, payments, settings).
+- [x] Create `src/components/admin/AdminNavbar.tsx` component for navigation sidebar (dashboard, users, payments, settings).
 - [ ] Overhaul `src/pages/Admin.tsx`:
   - [ ] Add state for active section and sidebar collapse.
   - [ ] Implement dashboard section with stats cards (total users, pending payments, processed payments, revenue).
