@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line } from "recharts";
 import { Users, DollarSign, Clock, TrendingUp, Loader2, Activity, Search, Download } from "lucide-react";
 import { getAdminStats, getAdminPaymentsChart, getAdminPaymentStatusChart, getAdminUserGrowthChart, getAdminUsersList, getAdminPaymentsList, getAdminRecentActivities } from "@/lib/api";
+import { useAuth } from "@/contexts/AuthContext";
 import AdminNavbar from "../components/admin/AdminNavbar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -41,15 +42,16 @@ const AnimatedPage = ({ children }) => (
 // Admin Dashboard
 const AdminDashboard = () => {
   const { t } = useTranslation();
+  const { user } = useAuth();
 
   const { data: stats, isLoading: statsLoading, error: statsError } = useQuery({
-    queryKey: ['adminStats'],
-    queryFn: getAdminStats,
+    queryKey: ['adminStats', user?.role, user?.service],
+    queryFn: () => getAdminStats(user),
   });
 
   const { data: paymentsChart, isLoading: paymentsLoading } = useQuery({
-    queryKey: ['adminPaymentsChart'],
-    queryFn: getAdminPaymentsChart,
+    queryKey: ['adminPaymentsChart', user?.role, user?.service],
+    queryFn: () => getAdminPaymentsChart(user),
   });
 
   const { data: paymentStatusChart, isLoading: statusLoading } = useQuery({
@@ -180,10 +182,11 @@ const AdminDashboard = () => {
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="name" />
                   <YAxis />
-                  <Tooltip formatter={(value, name) => [`${value}`, name === 'water' ? 'Water' : 'Security']} />
+                  <Tooltip formatter={(value, name) => [`${value}`, name === 'water' ? t('water') : name === 'security' ? t('security') : name === 'sanitation' ? t('sanitation') : name]} />
                   <Legend />
-                  <Bar dataKey="water" fill="#8884d8" name="Water" />
-                  <Bar dataKey="security" fill="#82ca9d" name="Security" />
+                  <Bar dataKey="water" fill="#8884d8" name={t('water')} />
+                  <Bar dataKey="security" fill="#82ca9d" name={t('security')} />
+                  <Bar dataKey="sanitation" fill="#ffc658" name={t('sanitation')} />
                 </BarChart>
               </ResponsiveContainer>
             ) : (
@@ -427,9 +430,10 @@ const UsersSection = () => {
 // Payments Section
 const PaymentsSection = () => {
   const { t } = useTranslation();
+  const { user } = useAuth();
   const { data: payments, isLoading } = useQuery({
-    queryKey: ['adminPaymentsList'],
-    queryFn: getAdminPaymentsList,
+    queryKey: ['adminPaymentsList', user?.role, user?.service],
+    queryFn: () => getAdminPaymentsList(user),
   });
 
   const handleExport = () => {

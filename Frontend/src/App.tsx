@@ -6,7 +6,7 @@ import { Landing } from "./pages/Landing";
 import LoginPage from "./pages/LoginPage";
 import { Admin } from "./pages/Admin";
 import SignUpPage from "./pages/SignUp";
-import { Dashboard } from "./pages/Dashboard";
+import { User } from "./pages/User";
 import SuperAdmin from "./pages/SuperAdmin";
 import { AnimatePresence, motion } from "framer-motion";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
@@ -94,7 +94,7 @@ function AnimatedRoutes() {
               exit={{ opacity: 0, y: -50 }}
               transition={{ duration: 0.5 }}
             >
-              <Dashboard />
+              <User />
             </motion.div>
           }
         />

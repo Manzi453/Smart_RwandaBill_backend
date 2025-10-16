@@ -8,6 +8,7 @@ export interface User {
   district: string;
   sector: string;
   role: 'superadmin' | 'admin' | 'member';
+  service?: 'security' | 'sanitation' | 'water'; // Optional service field for admins
   group: string;
 }
 
@@ -46,13 +47,38 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         },
         {
           id: "2",
-          fullName: "Admin User",
-          email: "admin@example.com",
+          fullName: "Security Admin",
+          email: "security-admin@example.com",
           password: "admin123", // Added password
           telephone: "0787654321",
           district: "Kigali",
           sector: "Gasabo",
           role: "admin" as const,
+          service: "security" as const,
+          group: "Regional Administrators",
+        },
+        {
+          id: "4",
+          fullName: "Water Admin",
+          email: "water-admin@example.com",
+          password: "admin123", // Added password
+          telephone: "0787654322",
+          district: "Kigali",
+          sector: "Kicukiro",
+          role: "admin" as const,
+          service: "water" as const,
+          group: "Regional Administrators",
+        },
+        {
+          id: "5",
+          fullName: "Sanitation Admin",
+          email: "sanitation-admin@example.com",
+          password: "admin123", // Added password
+          telephone: "0787654323",
+          district: "Kigali",
+          sector: "Nyarugenge",
+          role: "admin" as const,
+          service: "sanitation" as const,
           group: "Regional Administrators",
         },
         {
