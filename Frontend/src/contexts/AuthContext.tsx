@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+  import React, { createContext, useContext, useState } from 'react';
 
 export interface User {
   id: string;
@@ -17,6 +17,7 @@ interface AuthContextType {
   login: (data: { email: string; password: string }) => Promise<void>;
   logout: () => void;
   signup: (data: { fullName: string; email: string; telephone: string; district: string; sector: string; password: string }) => Promise<void>;
+  googleSignup: (data: { fullName: string; email: string }) => Promise<void>;
   isLoading: boolean;
   isAuthenticated: boolean;
 }
@@ -30,84 +31,40 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const login = async (data: { email: string; password: string }) => {
     setIsLoading(true);
     try {
-      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API delay
+      const response = await fetch('http://localhost:8080/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
 
-      // Define mock users with passwords
-      const mockUsers = [
-        {
-          id: "1",
-          fullName: "Super Admin User",
-          email: "superadmin@example.com",
-          password: "superadmin123", // Added password
-          telephone: "0781234567",
-          district: "Kigali",
-          sector: "Nyarugenge",
-          role: "superadmin" as const,
-          group: "System Administrators",
-        },
-        {
-          id: "2",
-          fullName: "Security Admin",
-          email: "security-admin@example.com",
-          password: "admin123", // Added password
-          telephone: "0787654321",
-          district: "Kigali",
-          sector: "Gasabo",
-          role: "admin" as const,
-          service: "security" as const,
-          group: "Regional Administrators",
-        },
-        {
-          id: "4",
-          fullName: "Water Admin",
-          email: "water-admin@example.com",
-          password: "admin123", // Added password
-          telephone: "0787654322",
-          district: "Kigali",
-          sector: "Kicukiro",
-          role: "admin" as const,
-          service: "water" as const,
-          group: "Regional Administrators",
-        },
-        {
-          id: "5",
-          fullName: "Sanitation Admin",
-          email: "sanitation-admin@example.com",
-          password: "admin123", // Added password
-          telephone: "0787654323",
-          district: "Kigali",
-          sector: "Nyarugenge",
-          role: "admin" as const,
-          service: "sanitation" as const,
-          group: "Regional Administrators",
-        },
-        {
-          id: "3",
-          fullName: "John Doe",
-          email: "member@example.com",
-          password: "member123", // Added password
-          telephone: "0781234567",
-          district: "Kigali",
-          sector: "Nyarugenge",
-          role: "member" as const,
-          group: "Kigali Women's Group",
-        }
-      ];
-
-      // Find user by email and validate password
-      const user = mockUsers.find(u => u.email === data.email);
-
-      if (!user) {
-        throw new Error("User not found");
+      if (!response.ok) {
+        const errorData = await response.text();
+        throw new Error(errorData || 'Login failed');
       }
 
-      if (user.password !== data.password) {
-        throw new Error("Invalid password");
-      }
+      const userData = await response.json();
 
-      // Remove password from user object before storing
-      const { password, ...userWithoutPassword } = user;
-      setUser(userWithoutPassword);
+      // Map backend role to frontend role
+      const roleMapping: { [key: string]: 'superadmin' | 'admin' | 'member' } = {
+        'SUPER_ADMIN': 'superadmin',
+        'ADMIN': 'admin',
+        'USER': 'member'
+      };
+
+      const mappedUser: User = {
+        id: userData.id.toString(),
+        fullName: userData.fullName,
+        email: userData.email,
+        telephone: '', // Not returned by backend, could be added later
+        district: userData.district,
+        sector: userData.sector,
+        role: roleMapping[userData.role] || 'member',
+        group: 'Default Group', // Could be added to backend later
+      };
+
+      setUser(mappedUser);
 
     } catch (error: any) {
       throw new Error(error.message || "Login failed");
@@ -123,14 +80,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const signup = async (data: { fullName: string; email: string; telephone: string; district: string; sector: string; password: string }) => {
     setIsLoading(true);
     try {
-      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API delay
+      const response = await fetch('http://localhost:8080/api/auth/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
 
-      // Simulate signup - in real app this would create a new user
-      // For now, just log the data
-      console.log("Signup data:", data);
+      if (!response.ok) {
+        const errorData = await response.text();
+        throw new Error(errorData || 'Signup failed');
+      }
 
-      // You could add the new user to the mock users array here
-      // But for now, we'll just simulate success
+      // Signup successful, but don't auto-login
+      // User will need to login manually
 
     } catch (error: any) {
       throw new Error(error.message || "Signup failed");
@@ -139,8 +103,34 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  const googleSignup = async (data: { fullName: string; email: string }) => {
+    setIsLoading(true);
+    try {
+      const response = await fetch('http://localhost:8080/api/auth/oauth/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.text();
+        throw new Error(errorData || 'Google signup failed');
+      }
+
+      // Signup successful, but don't auto-login
+      // User will need to login manually
+
+    } catch (error: any) {
+      throw new Error(error.message || "Google signup failed");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ user, login, logout, signup, isLoading, isAuthenticated: !!user }}>
+    <AuthContext.Provider value={{ user, login, logout, signup, googleSignup, isLoading, isAuthenticated: !!user }}>
       {children}
     </AuthContext.Provider>
   );

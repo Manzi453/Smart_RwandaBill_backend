@@ -15,7 +15,13 @@ import {
 } from "@/components/ui/select";
 import { FcGoogle } from "react-icons/fc";
 import { motion } from "framer-motion";
+import { useAuth } from "@/contexts/AuthContext";
 
+declare global {
+  interface Window {
+    google?: any;
+  }
+}
 
 // Mock data for districts and sectors
 const DISTRICTS = [
@@ -43,6 +49,7 @@ export default function SignUpPage() {
   const { t } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
+  const { googleSignup } = useAuth();
 
   const [form, setForm] = useState({
     telephone: "",
@@ -74,15 +81,66 @@ export default function SignUpPage() {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Sign up attempt:", form);
-    // TODO: connect with backend authentication API
+
+    try {
+      const response = await fetch("http://localhost:8080/api/auth/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
+
+      if (response.ok) {
+        const result = await response.text();
+        alert("Signup successful: " + result);
+        navigate("/login"); // Redirect to login page
+      } else {
+        const error = await response.text();
+        alert("Signup failed: " + error);
+      }
+    } catch (error) {
+      console.error("Error during signup:", error);
+      alert("An error occurred during signup. Please try again.");
+    }
   };
 
-  const handleGoogleSignUp = () => {
+  const handleGoogleSignUp = async () => {
     console.log("Google sign up initiated");
-    // TODO: Implement Google OAuth integration
+
+    // Initialize Google Identity Services
+    if (window.google) {
+      window.google.accounts.id.initialize({
+        client_id: 'YOUR_GOOGLE_CLIENT_ID', // Replace with your actual Client ID
+        callback: async (response: any) => {
+          console.log("Google response:", response);
+
+          // Decode the JWT token to get user info
+          const userInfo = JSON.parse(atob(response.credential.split('.')[1]));
+          console.log("User info:", userInfo);
+
+          // Extract user data
+          const { name, email } = userInfo;
+
+          try {
+            await googleSignup({ fullName: name, email });
+            alert("Google signup successful! Please login.");
+            navigate("/login");
+          } catch (error: any) {
+            console.error("Google signup failed:", error);
+            alert("Google signup failed: " + error.message);
+          }
+        },
+      });
+
+      // Prompt the user to sign in
+      window.google.accounts.id.prompt();
+    } else {
+      alert("Google Identity Services not loaded.");
+    }
   };
 
   const availableSectors = form.district
