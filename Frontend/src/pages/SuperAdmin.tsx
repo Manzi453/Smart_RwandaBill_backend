@@ -69,30 +69,30 @@ const SuperAdminDashboard = () => {
     {
       label: t("totalUsers"),
       value: stats ? stats.totalUsers.toLocaleString() : t("loading"),
-      change: "+8%",
+      change: `+${stats?.monthlyGrowth || 8}%`,
       icon: Users,
       tooltip: t("totalUsersTooltip")
     },
     {
-      label: t("totalBills"),
-      value: stats ? stats.totalBills.toLocaleString() : t("loading"),
-      change: "+15%",
+      label: "Total Revenue",
+      value: stats ? `${(stats.totalRevenue / 1000000).toFixed(1)}M RWF` : t("loading"),
+      change: "+12%",
       icon: TrendingUp,
-      tooltip: t("totalBillsTooltip")
+      tooltip: "Total revenue across all services"
     },
     {
       label: t("totalAdmins"),
       value: stats ? stats.totalAdmins.toString() : t("loading"),
-      change: "+12%",
+      change: "+5%",
       icon: Shield,
       tooltip: t("totalAdminsTooltip")
     },
     {
-      label: t("systemHealth"),
-      value: stats ? `${stats.systemHealth}%` : t("loading"),
-      change: "+2.1%",
+      label: "Collection Rate",
+      value: stats ? `${stats.collectionRate}%` : t("loading"),
+      change: "+1.2%",
       icon: Activity,
-      tooltip: t("systemHealthTooltip")
+      tooltip: "Payment collection rate"
     }
   ];
 

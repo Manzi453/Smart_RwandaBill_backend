@@ -53,7 +53,7 @@ export default function LoginPage() {
           navigate("/admin");
           break;
         case "member":
-          navigate("/member");
+          navigate("/dashboard");
           break;
         default:
           navigate("/");

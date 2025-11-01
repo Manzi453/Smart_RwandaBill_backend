@@ -88,14 +88,16 @@ function AnimatedRoutes() {
         <Route
           path="/dashboard"
           element={
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -50 }}
-              transition={{ duration: 0.5 }}
-            >
-              <User />
-            </motion.div>
+            <ProtectedRoute>
+              <motion.div
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -50 }}
+                transition={{ duration: 0.5 }}
+              >
+                <User />
+              </motion.div>
+            </ProtectedRoute>
           }
         />
         <Route

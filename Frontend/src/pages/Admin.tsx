@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line } from "recharts";
 import { Users, DollarSign, Clock, TrendingUp, Loader2, Activity, Search, Download } from "lucide-react";
-import { getAdminStats, getAdminPaymentsChart, getAdminPaymentStatusChart, getAdminUserGrowthChart, getAdminUsersList, getAdminPaymentsList, getAdminRecentActivities } from "@/lib/api";
+import { getAdminStats, getAdminPaymentsChart, getAdminPaymentStatusChart, getAdminUserGrowthChart, getAdminUsersList, getAdminPaymentsList, getAdminRecentActivities, generateBills } from "@/lib/api";
 import { useAuth } from "@/contexts/AuthContext";
 import AdminNavbar from "../components/admin/AdminNavbar";
 import { Button } from "@/components/ui/button";
@@ -46,27 +46,27 @@ const AdminDashboard = () => {
 
   const { data: stats, isLoading: statsLoading, error: statsError } = useQuery({
     queryKey: ['adminStats', user?.role, user?.service],
-    queryFn: () => getAdminStats(user),
+    queryFn: async () => await getAdminStats(user),
   });
 
   const { data: paymentsChart, isLoading: paymentsLoading } = useQuery({
     queryKey: ['adminPaymentsChart', user?.role, user?.service],
-    queryFn: () => getAdminPaymentsChart(user),
+    queryFn: async () => await getAdminPaymentsChart(user),
   });
 
   const { data: paymentStatusChart, isLoading: statusLoading } = useQuery({
     queryKey: ['adminPaymentStatusChart'],
-    queryFn: getAdminPaymentStatusChart,
+    queryFn: () => getAdminPaymentStatusChart(),
   });
 
   const { data: userGrowthChart, isLoading: growthLoading } = useQuery({
     queryKey: ['adminUserGrowthChart'],
-    queryFn: getAdminUserGrowthChart,
+    queryFn: () => getAdminUserGrowthChart(),
   });
 
   const { data: recentActivities, isLoading: activitiesLoading } = useQuery({
     queryKey: ['adminRecentActivities'],
-    queryFn: getAdminRecentActivities,
+    queryFn: () => getAdminRecentActivities(),
   });
 
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
@@ -326,6 +326,69 @@ const AdminDashboard = () => {
   );
 };
 
+// Bill Generation Section
+const BillGenerationSection = () => {
+  const { t } = useTranslation();
+  const [selectedService, setSelectedService] = useState("water");
+  const [selectedDistrict, setSelectedDistrict] = useState("");
+
+  const handleGenerateBills = async () => {
+    try {
+      const result = await generateBills(selectedService, selectedDistrict || undefined);
+      toast.success(`Generated ${result.generated} bills for ${result.service}`);
+    } catch (error) {
+      toast.error("Failed to generate bills");
+    }
+  };
+
+  return (
+    <AnimatedPage>
+      <div className="p-6 space-y-6">
+        <h1 className="text-3xl font-bold text-foreground">Bill Generation</h1>
+
+        <div className="bg-card rounded-xl shadow-soft border p-6 space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <Label htmlFor="service">Service Type</Label>
+              <Select value={selectedService} onValueChange={setSelectedService}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select service" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="water">Water</SelectItem>
+                  <SelectItem value="sanitation">Sanitation</SelectItem>
+                  <SelectItem value="security">Security</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="district">District (Optional)</Label>
+              <Select value={selectedDistrict} onValueChange={setSelectedDistrict}>
+                <SelectTrigger>
+                  <SelectValue placeholder="All districts" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="">All Districts</SelectItem>
+                  <SelectItem value="Kigali City">Kigali City</SelectItem>
+                  <SelectItem value="Northern Province">Northern Province</SelectItem>
+                  <SelectItem value="Southern Province">Southern Province</SelectItem>
+                  <SelectItem value="Eastern Province">Eastern Province</SelectItem>
+                  <SelectItem value="Western Province">Western Province</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
+          <Button onClick={handleGenerateBills} className="w-full md:w-auto">
+            Generate Bills
+          </Button>
+        </div>
+      </div>
+    </AnimatedPage>
+  );
+};
+
 // Users Section
 const UsersSection = () => {
   const { t } = useTranslation();
@@ -570,6 +633,8 @@ const Admin = () => {
     switch (activeSection) {
       case "dashboard":
         return <AdminDashboard />;
+      case "bill-generation":
+        return <BillGenerationSection />;
       case "users":
         return <UsersSection />;
       case "payments":

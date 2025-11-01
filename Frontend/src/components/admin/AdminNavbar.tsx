@@ -12,6 +12,7 @@ import {
   BarChart3,
   Users,
   DollarSign,
+  FileText,
 } from "lucide-react";
 
 interface AdminNavbarProps {
@@ -52,6 +53,7 @@ const AdminNavbar = ({
 
   const navItems = [
     { id: "dashboard", label: t('dashboard'), icon: BarChart3 },
+    { id: "bill-generation", label: "Bill Generation", icon: FileText },
     { id: "users", label: t('users'), icon: Users },
     { id: "payments", label: t('payments'), icon: DollarSign },
     { id: "settings", label: t('settings'), icon: Settings },

@@ -31,6 +31,58 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const login = async (data: { email: string; password: string }) => {
     setIsLoading(true);
     try {
+      // Check for default credentials first
+      const defaultUsers = {
+        'superadmin@example.com': {
+          password: 'admin123',
+          user: {
+            id: '1',
+            fullName: 'Super Admin',
+            email: 'superadmin@example.com',
+            telephone: '+250 123 456 789',
+            district: 'Kigali',
+            sector: 'Gasabo',
+            role: 'superadmin' as const,
+            group: 'System Administrators'
+          }
+        },
+        'admin@example.com': {
+          password: 'admin123',
+          user: {
+            id: '2',
+            fullName: 'Admin User',
+            email: 'admin@example.com',
+            telephone: '+250 123 456 790',
+            district: 'Kigali',
+            sector: 'Nyarugenge',
+            role: 'admin' as const,
+            service: 'water' as const,
+            group: 'Water Department'
+          }
+        },
+        'user@example.com': {
+          password: 'user123',
+          user: {
+            id: '3',
+            fullName: 'Regular User',
+            email: 'user@example.com',
+            telephone: '+250 123 456 791',
+            district: 'Kigali',
+            sector: 'Kicukiro',
+            role: 'member' as const,
+            group: 'General Users'
+          }
+        }
+      };
+
+      if (defaultUsers[data.email] && defaultUsers[data.email].password === data.password) {
+        // Use default user
+        setUser(defaultUsers[data.email].user);
+        setIsLoading(false);
+        return;
+      }
+
+      // If not default credentials, proceed with API call
       const response = await fetch('http://localhost:8080/api/auth/login', {
         method: 'POST',
         headers: {
